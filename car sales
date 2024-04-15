@@ -1,0 +1,35 @@
+# Car Sales Data Analysis
+
+# Load required libraries
+library(dplyr)
+
+# Load the dataset
+car_sales <- read.csv("car_sales_data.csv")
+
+# View the structure of the dataset
+str(car_sales)
+
+# Summary statistics
+summary(car_sales)
+
+# Data cleaning: removing missing values
+car_sales <- na.omit(car_sales)
+
+# Data analysis
+# Example analysis: average price by car make
+average_price_by_make <- car_sales %>%
+  group_by(Make) %>%
+  summarise(Average_Price = mean(Price))
+
+# Plotting
+plot(average_price_by_make$Make, average_price_by_make$Average_Price, type = "b", 
+     xlab = "Car Make", ylab = "Average Price", main = "Average Price by Car Make")
+
+# Save the plot
+png("average_price_by_make_plot.png")
+plot(average_price_by_make$Make, average_price_by_make$Average_Price, type = "b", 
+     xlab = "Car Make", ylab = "Average Price", main = "Average Price by Car Make")
+dev.off()
+
+# Save the cleaned dataset
+write.csv(car_sales, "cleaned_car_sales_data.csv", row.names = FALSE)
